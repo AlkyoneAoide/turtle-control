@@ -1,6 +1,9 @@
-local ws = assert(http.websocket("ws://vps.rosie.gg"))
+ws = assert(http.websocket("ws://vps.rosie.gg:8080"))
 
-ws.send("Hello from minecraft")
-print(ws.receive())
+local res, resIsBin = ws.receive()
+print(res)
+
+ws.send("Hello from Minecraft!")
+
 ws.close()
 
