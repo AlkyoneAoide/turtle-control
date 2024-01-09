@@ -1,6 +1,6 @@
 const WebSockets = require('./libs/node_modules/ws/index.js')
 
-const wss = new WebSockets.WebSocketServer({ port:443 })
+const wss = new WebSockets.WebSocketServer({ port:80 })
 
 function main() {
 	wss.on('connection', WebSocketConnected)
@@ -8,6 +8,7 @@ function main() {
 }
 
 function WebSocketConnected(ws) {
+	console.log("Client connected.")
 	ws.send("Hello from websocket server")
 }
 
