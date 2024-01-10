@@ -18,7 +18,7 @@ function printb(tab)
     for i=#tab, 1, -1 do
         write(tab[#tab - i + 1])
 
-        if (math.fmod(i, 4) == 0) then
+        if (math.fmod(i+1, 4) == 0) then
             write(" ")
         end
     end
