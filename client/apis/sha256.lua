@@ -184,7 +184,7 @@ local function compute(data, L)
     return (h1 .. h2 .. h3 .. h4 .. h5 .. h6 .. h7 .. h8)
 end
 
-local function sha256(input)
+function sha256(input)
     local bits = {}
     local L = 0
 
