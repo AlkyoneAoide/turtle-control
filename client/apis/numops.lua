@@ -25,7 +25,7 @@ function dec2bin(num, bitNum)
 
     if (#result > bitNum) then
         local newResult = {}
-        for i=1, bitNum, 1 do
+        for i=#result, #result - bitNum, -1 do
             newResult[i] = result[i]
         end
 
