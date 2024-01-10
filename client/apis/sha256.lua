@@ -88,6 +88,7 @@ local function compute(data, dataLen)
         for j=1, 16, 1 do
             local word = {}
             for l=1, 32, 1 do
+                print(chunkIndex)
                 word[l] = chunks[i][chunkIndex]
                 chunkIndex = chunkIndex + 1
             end
@@ -117,7 +118,7 @@ local function compute(data, dataLen)
         local g = h7
         local h = h8
 
-        for j=1, #words, 1 do
+        for j=1, 64, 1 do
             -- Get sigma1 (bits)
             local sigma1 = {}
 
@@ -230,9 +231,6 @@ function sha256(input)
             bits = tabops.tableConcat(bits, numops.dec2bin(string.byte(stringInput, i), 8))
         end
     end
-
-    write("bits: ")
-    bitops.printb(bits)
 
     return compute(bits, L)
 end
