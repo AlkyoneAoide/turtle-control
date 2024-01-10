@@ -215,7 +215,7 @@ function sha256(input)
     if (fs.exists(input) and not (fs.isDir(input))) then
         -- Open file and get length
         local file = fs.open(input, "rb")
-        L = fs.getSize(input) * 8
+        L = fs.getSize(input)
 
         -- Read file as bytes
         for i=1, L, 1 do
@@ -225,12 +225,12 @@ function sha256(input)
         file.close()
     else
         local stringInput = tostring(input)
-        L = string.len(stringInput) * 8
+        L = string.len(stringInput)
 
         for i=1, L, 1 do
             bits = tabops.tableConcat(bits, numops.dec2bin(string.byte(stringInput, i), 8))
         end
     end
 
-    return compute(bits, L)
+    return compute(bits, L * 8)
 end
