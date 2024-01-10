@@ -185,14 +185,6 @@ local function compute(data, dataLen)
         h8 = math.fmod(h8 + h, math.pow(2, 32))
     end
 
-    for i=1, 32, 1 do
-        write(numops.dec2bin(h1, 32)[i])
-
-        if (math.fmod(i, 4) == 0) then
-            write(" ")
-        end
-    end
-    
     return (h1 .. h2 .. h3 .. h4 .. h5 .. h6 .. h7 .. h8)
 end
 

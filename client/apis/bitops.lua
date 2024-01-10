@@ -13,12 +13,30 @@ local function padb(tab1, tab2)
     return tab1, tab2
 end
 
+-- print a table of bits
+function printb(tab)
+    for i=#tab, 1, -1 do
+        write(tab[#tab - i])
+
+        if (math.fmod(i, 4) == 0) then
+            write(" ")
+        end
+    end
+
+    print()
+end
+
 -- right shift a table of big-endian bits
 function shiftrb(tab, num)
+    write("shift input: ")
+    printb(tab)
     for i=1, num, 1 do
         table.remove(tab, #tab)
         table.insert(tab, 1, 0)
     end
+
+    write("shift output: ")
+    printb(tab)
 
     return tab
 end
