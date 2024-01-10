@@ -9,6 +9,7 @@ function dec2bin(num, bitNum)
 
     local bits = {}
 
+    -- convert to binary
     while (num > 0) do
         local scanned = math.fmod(num, 2)
         bits[#bits + 1] = scanned
@@ -17,14 +18,17 @@ function dec2bin(num, bitNum)
 
     local result = {}
 
+    -- reverse the list so it's proper big endian
     for i=#bits, 1, -1 do
         result[#result + 1] = bits[i]
     end
 
+    print(result)
     if (#result > bitNum) then
         error("Not enough bits to represent input.")
     end
 
+    -- pad with zeros
     while (#result < bitNum) do
         table.insert(result, 1, 0)
     end
