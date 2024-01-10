@@ -63,7 +63,7 @@ local function compute(data, dataLen)
     end
 
     -- Append length as a 64 bit big-endian integer
-    tabops.tableConcat(data, numops.dec2bin(dataLen, 64))
+    data = tabops.tableConcat(data, numops.dec2bin(dataLen, 64))
 
     -- Processing
     -- Break file into 512-bit chunks
@@ -213,8 +213,8 @@ function sha256(input)
 
     if (fs.exists(input)) then
         -- Open file and get length
-        local file = fs.open(arg[1], "rb")
-        L = fs.getSize(arg[1])
+        local file = fs.open(input, "rb")
+        L = fs.getSize(input)
 
         -- Read file as bytes
         for i=1, L, 1 do
