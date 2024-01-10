@@ -211,7 +211,7 @@ function sha256(input)
     local bits = {}
     local L = 0
 
-    if (fs.exists(input)) then
+    if (fs.exists(input) and not (fs.isDir(input))) then
         -- Open file and get length
         local file = fs.open(input, "rb")
         L = fs.getSize(input)
