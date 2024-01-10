@@ -182,7 +182,7 @@ local function compute(data, L)
         h8 = h8 + h
     end
 
-    return (h1 .. h2 .. h3 .. h4 .. h5 .. h6 .. h7 .. h8)
+    return (h1 .. " " .. h2 .. " " .. h3 .. " " .. h4 .. " " .. h5 .. " " .. h6 .. " " .. h7 .. " " .. h8)
 end
 
 function sha256(input)
