@@ -62,9 +62,8 @@ local function compute(data, dataLen)
         data[#data+1] = 0
     end
 
-    -- Append L as a 64 bit big-endian integer
-    LBits = numops.dec2bin(dataLen, 64)
-    tabops.tableConcat(data, LBits)
+    -- Append length as a 64 bit big-endian integer
+    tabops.tableConcat(data, numops.dec2bin(dataLen, 64))
 
     -- Processing
     -- Break file into 512-bit chunks
@@ -85,27 +84,26 @@ local function compute(data, dataLen)
         -- Split into 16 32 bit words
         local words = {}
 
+        local chunkIndex = 1
         for j=1, 16, 1 do
             local word = {}
             for l=1, 32, 1 do
-                word[#word + 1] = data[(j-1)*16 + l]
+                word[l] = chunks[i][chunkIndex]
+                chunkIndex = chunkIndex + 1
             end
-            words[#words + 1] = word
+            words[j] = word
         end
 
-        for j=1, 48, 1 do
-            local pos = j + 16
-
-
+        for j=17, 64, 1 do
             -- Add our terms then % 2^32 so we get a 32 bit result
             local tmpValue = 0
 
-            tmpValue = tmpValue + tonumber(table.concat(sigma(words[pos - 2], 1)), 2)
-            tmpValue = tmpValue + tonumber(table.concat(words[pos - 7]), 2)
-            tmpValue = tmpValue + tonumber(table.concat(sigma(words[pos - 15], 0)), 2)
-            tmpValue = tmpValue + tonumber(table.concat(words[pos - 16]), 2)
+            tmpValue = tmpValue + numops.bin2dec(sigma(words[j - 2], 1))
+            tmpValue = tmpValue + numops.bin2dec(words[j - 7])
+            tmpValue = tmpValue + numops.bin2dec(sigma(words[j - 15], 0))
+            tmpValue = tmpValue + numops.bin2dec(words[j - 16])
 
-            words[pos] = numops.dec2bin(math.fmod(tmpValue, math.pow(2, 32)), 32)
+            words[j] = numops.dec2bin(math.fmod(tmpValue, math.pow(2, 32)), 32)
         end
 
         -- Now words is 64 long and has everything...
@@ -133,10 +131,17 @@ local function compute(data, dataLen)
             end
 
             -- Get ch (bits)
-            local ch = bitops.xorb(bitops.andb(numops.dec2bin(e, 32), numops.dec2bin(f, 32)), bitops.andb(bitops.notb(numops.dec2bin(e, 32)), numops.dec2bin(g, 32)))
+            local ch = bitops.xorb(
+                bitops.andb(numops.dec2bin(e, 32), numops.dec2bin(f, 32)),
+                bitops.andb(bitops.notb(numops.dec2bin(e, 32)), numops.dec2bin(g, 32))
+            )
 
             -- Get temp1 (number)
-            local temp1 = math.fmod((h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + constants[j] + tonumber(table.concat(words[j]), 2)), math.pow(2, 32))
+            local temp1 = math.fmod(
+                (h + numops.bin2dec(sigma1) + numops.bin2dec(ch) +
+                    constants[j] + numops.bin2dec(words[j])),
+                math.pow(2, 32)
+            )
 
             -- Get sigma0 (bits)
             local sigma0 = {}
@@ -163,7 +168,11 @@ local function compute(data, dataLen)
             end
 
             -- Get temp2 (number)
-            local temp2 = math.fmod((tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2)), math.pow(2, 32))
+            local temp2 = math.fmod(
+                (numops.bin2dec(sigma0) + numops.bin2dec(maj)),
+                math.pow(2, 32)
+            )
+
             -- Assign new values to a-h
             h = g
             g = f

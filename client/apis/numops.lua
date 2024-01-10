@@ -45,3 +45,12 @@ function dec2bin(num, bitNum)
 
     return result
 end
+
+-- Outputs a lua number given a binary big-endian bit table
+function bin2dec(tab)
+    if (not (type(tab) == "table")) then
+        error("Expected table.")
+    end
+
+    return tonumber(table.concat(tab), 2)
+end
