@@ -14,6 +14,8 @@ local function sigma(tab, num)
     local c = bitops.shiftrb(tab, bitArgs[3])
 
     local result = {}
+
+    -- do the xor
     for i=1, #a, 1 do
         result[i] = math.fmod((a[i]+b[i]+c[i]), 2)
     end
@@ -134,7 +136,7 @@ local function compute(data, dataLen)
             local ch = bitops.xorb(bitops.andb(numops.dec2bin(e, 32), numops.dec2bin(f, 32)), bitops.andb(bitops.notb(numops.dec2bin(e, 32)), numops.dec2bin(g, 32)))
 
             -- Get temp1 (number)
-            local temp1 = (h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + constants[j] + tonumber(table.concat(words[j]), 2))
+            local temp1 = math.fmod((h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + constants[j] + tonumber(table.concat(words[j]), 2)), math.pow(2, 32))
 
             -- Get sigma0 (bits)
             local sigma0 = {}
@@ -161,7 +163,7 @@ local function compute(data, dataLen)
             end
 
             -- Get temp2 (number)
-            local temp2 = (tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2))
+            local temp2 = math.fmod((tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2)), math.pow(2, 32))
             -- Assign new values to a-h
             h = g
             g = f
