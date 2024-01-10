@@ -95,15 +95,12 @@ local function compute(data, dataLen)
         end
 
         for j=17, 64, 1 do
-            -- Add our terms then % 2^32 so we get a 32 bit result
-            local tmpValue = 0
-
-            tmpValue = tmpValue + numops.bin2dec(sigma(words[j - 2], 1))
-            tmpValue = tmpValue + numops.bin2dec(words[j - 7])
-            tmpValue = tmpValue + numops.bin2dec(sigma(words[j - 15], 0))
-            tmpValue = tmpValue + numops.bin2dec(words[j - 16])
-
-            words[j] = numops.dec2bin(math.fmod(tmpValue, math.pow(2, 32)), 32)
+            -- Fill the rest of the 48 words
+            words[j] = numops.dec2bin(
+                numops.bin2dec(sigma(words[j - 2], 1)) + numops.bin2dec(words[j - 7]) +
+                numops.bin2dec(sigma(words[j - 15], 0)) + numops.bin2dec(words[j - 16]),
+                32
+            )
         end
 
         -- Now words is 64 long and has everything...
