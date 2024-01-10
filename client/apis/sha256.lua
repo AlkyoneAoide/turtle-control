@@ -172,14 +172,14 @@ local function compute(data, L)
             a = tonumber(table.concat(numops.dec2bin(temp1 + temp2, 32)))
         end
 
-        h1 = h1 + a
-        h2 = h2 + b
-        h3 = h3 + c
-        h4 = h4 + d
-        h5 = h5 + e
-        h6 = h6 + f
-        h7 = h7 + g
-        h8 = h8 + h
+        h1 = tonumber(table.concat(numops.dec2bin(h1 + a, 32)))
+        h2 = tonumber(table.concat(numops.dec2bin(h2 + b, 32)))
+        h3 = tonumber(table.concat(numops.dec2bin(h3 + c, 32)))
+        h4 = tonumber(table.concat(numops.dec2bin(h4 + d, 32)))
+        h5 = tonumber(table.concat(numops.dec2bin(h5 + e, 32)))
+        h6 = tonumber(table.concat(numops.dec2bin(h6 + f, 32)))
+        h7 = tonumber(table.concat(numops.dec2bin(h7 + g, 32)))
+        h8 = tonumber(table.concat(numops.dec2bin(h8 + h, 32)))
     end
 
     return (h1 .. " " .. h2 .. " " .. h3 .. " " .. h4 .. " " .. h5 .. " " .. h6 .. " " .. h7 .. " " .. h8)
