@@ -29,9 +29,15 @@ function dec2bin(num, bitNum)
             newResult[i] = result[#result-i + 1]
         end
 
-        print(table.concat(result) .. " truncated to " .. table.concat(newResult))
+        -- reverse newResult
+        local newerResult = {}
+        for i=bitNum, 1, -1 do
+            newerResult[#newerResult+1] = newResult[i]
+        end
 
-        result = newResult
+        print(table.concat(result) .. " truncated to " .. table.concat(newerResult))
+
+        result = newerResult
     end
 
     -- pad with zeros
