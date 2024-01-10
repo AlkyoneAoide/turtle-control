@@ -161,15 +161,14 @@ local function compute(data, L)
             local temp2 = tonumber(table.concat(numops.dec2bin(tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2), 32)), 2)
 
             -- Assign new values to a-h
-            -- THIS CLAMPING IS SCREWING THINGS UP, TAKE A LOOK
-            h = tonumber(table.concat(numops.dec2bin(g, 32)), 2)
-            g = tonumber(table.concat(numops.dec2bin(f, 32)), 2)
-            f = tonumber(table.concat(numops.dec2bin(e, 32)), 2)
-            e = tonumber(table.concat(numops.dec2bin(d + temp1, 32)), 2)
-            d = tonumber(table.concat(numops.dec2bin(c, 32)), 2)
-            c = tonumber(table.concat(numops.dec2bin(b, 32)), 2)
-            b = tonumber(table.concat(numops.dec2bin(a, 32)), 2)
-            a = tonumber(table.concat(numops.dec2bin(temp1 + temp2, 32)), 2)
+            h = g
+            g = f
+            f = e
+            e = tonumber(table.concat(bitops.andb(numops.dec2bin(d, 32), numops.dec2bin(temp1, 32))), 2)
+            d = c
+            c = b
+            b = a
+            a = tonumber(table.concat(bitops.andb(numops.dec2bin(temp1, 32), numops.dec2bin(temp2, 32))), 2)
         end
 
         h1 = tonumber(table.concat(numops.dec2bin(h1 + a, 32)), 2)
@@ -182,7 +181,8 @@ local function compute(data, L)
         h8 = tonumber(table.concat(numops.dec2bin(h8 + h, 32)), 2)
     end
 
-    return (h1 .. " " .. h2 .. " " .. h3 .. " " .. h4 .. " " .. h5 .. " " .. h6 .. " " .. h7 .. " " .. h8)
+    print(h1 .. " " .. h2 .. " " .. h3 .. " " .. h4 .. " " .. h5 .. " " .. h6 .. " " .. h7 .. " " .. h8)
+    return (h1 .. h2 .. h3 .. h4 .. h5 .. h6 .. h7 .. h8)
 end
 
 function sha256(input)
@@ -209,7 +209,5 @@ function sha256(input)
         end
     end
 
-    local result = compute(bits, L)
-    print(result)
-    return result
+    return compute(bits, L)
 end
