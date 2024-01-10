@@ -92,12 +92,15 @@ function bin2hex(tab)
             print(digitLookup[table.concat(digit)])
             table.insert(result, 1, digitLookup[table.concat(digit)])
             bitCounter = 0
+            digit = {}
         end
 
         if ((i == 1) and (bitCounter > 0)) then
             _ = {0, 0, 0, 0}
             digit, _ = bitops.padb(digit, _)
             table.insert(result, 1, digitLookup[table.concat(digit)])
+            bitCounter = 0
+            digit = {}
         end
     end
 
