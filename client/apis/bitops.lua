@@ -109,14 +109,10 @@ function xorb(tab1, tab2)
     -- do the xoring
     local result = {}
     for i=1, #tab1, 1 do
-        local a = (not (tab1[i] and tab2[i]))
-        local b = (tab1[i] and a)
-        local c = (tab2[i] and a)
-
-        if (b or c) then
-            result[i] = 1
-        else
+        if (tab1[i] == tab2[i]) then
             result[i] = 0
+        else
+            result[i] = 1
         end
     end
 
