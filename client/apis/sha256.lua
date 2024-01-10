@@ -173,14 +173,14 @@ local function compute(data, dataLen)
             a = tonumber(table.concat(bitops.addb(numops.dec2bin(temp1, 32), numops.dec2bin(temp2, 32))), 2)
         end
 
-        h1 = tonumber(table.concat(numops.dec2bin(h1 + a, 32)), 2)
-        h2 = tonumber(table.concat(numops.dec2bin(h2 + b, 32)), 2)
-        h3 = tonumber(table.concat(numops.dec2bin(h3 + c, 32)), 2)
-        h4 = tonumber(table.concat(numops.dec2bin(h4 + d, 32)), 2)
-        h5 = tonumber(table.concat(numops.dec2bin(h5 + e, 32)), 2)
-        h6 = tonumber(table.concat(numops.dec2bin(h6 + f, 32)), 2)
-        h7 = tonumber(table.concat(numops.dec2bin(h7 + g, 32)), 2)
-        h8 = tonumber(table.concat(numops.dec2bin(h8 + h, 32)), 2)
+        h1 = h1 + a
+        h2 = h2 + b
+        h3 = h3 + c
+        h4 = h4 + d
+        h5 = h5 + e
+        h6 = h6 + f
+        h7 = h7 + g
+        h8 = h8 + h
     end
 
     for i=1, 32, 1 do
