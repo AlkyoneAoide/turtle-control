@@ -29,6 +29,8 @@ function dec2bin(num, bitNum)
             newResult[#result - i] = result[i]
         end
 
+        print(result .. " truncated to " .. newResult)
+
         result = newResult
     end
 
