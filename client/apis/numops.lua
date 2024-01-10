@@ -88,6 +88,8 @@ function bin2hex(tab)
         table.insert(digit, 1, tab[i])
 
         if (bitCounter == 4) then
+            print("finding " .. table.concat(digit) .. " in table")
+            print(digitLookup[table.concat(digit)])
             table.insert(result, 1, digitLookup[table.concat(digit)])
             bitCounter = 0
         end
