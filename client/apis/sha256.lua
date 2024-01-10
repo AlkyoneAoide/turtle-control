@@ -231,5 +231,8 @@ function sha256(input)
         end
     end
 
+    write("bits: ")
+    bitops.printb(bits)
+
     return compute(bits, L)
 end
