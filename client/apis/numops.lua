@@ -35,8 +35,6 @@ function dec2bin(num, bitNum)
             newerResult[#newerResult+1] = newResult[i]
         end
 
-        print(table.concat(result) .. " truncated to " .. table.concat(newerResult))
-
         result = newerResult
     end
 

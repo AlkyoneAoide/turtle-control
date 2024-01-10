@@ -133,7 +133,7 @@ local function compute(data, L)
             local ch = bitops.xorb(bitops.andb(numops.dec2bin(e, 32), numops.dec2bin(f, 32)), bitops.andb(bitops.notb(numops.dec2bin(e, 32)), numops.dec2bin(g, 32)))
 
             -- Get temp1 (number)
-            local temp1 = h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + k[j] + tonumber(table.concat(words[j]), 2)
+            local temp1 = tonumber(table.concat(numops.dec2bin((h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + k[j] + tonumber(table.concat(words[j]), 2)), 32)), 2)
 
             -- Get sigma0 (bits)
             local sigma0 = {}
@@ -158,17 +158,17 @@ local function compute(data, L)
             end
 
             -- Get temp2 (number)
-            local temp2 = tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2)
+            local temp2 = tonumber(table.concat(numops.dec2bin(tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2), 32)), 2)
 
             -- Assign new values to a-h
             -- THIS CLAMPING IS SCREWING THINGS UP, TAKE A LOOK
-            h = g
-            g = f
-            f = e
+            h = tonumber(table.concat(numops.dec2bin(g, 32)), 2)
+            g = tonumber(table.concat(numops.dec2bin(f, 32)), 2)
+            f = tonumber(table.concat(numops.dec2bin(e, 32)), 2)
             e = tonumber(table.concat(numops.dec2bin(d + temp1, 32)), 2)
-            d = c
-            c = b
-            b = a
+            d = tonumber(table.concat(numops.dec2bin(c, 32)), 2)
+            c = tonumber(table.concat(numops.dec2bin(b, 32)), 2)
+            b = tonumber(table.concat(numops.dec2bin(a, 32)), 2)
             a = tonumber(table.concat(numops.dec2bin(temp1 + temp2, 32)), 2)
         end
 
