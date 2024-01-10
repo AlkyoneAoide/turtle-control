@@ -23,8 +23,6 @@ function dec2bin(num, bitNum)
         result[#result + 1] = bits[i]
     end
 
-    print("result len: " .. #result)
-    print("bit num: " .. bitNum)
     if (#result > bitNum) then
         error("Not enough bits to represent input.")
     end
