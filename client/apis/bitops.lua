@@ -1,5 +1,5 @@
 -- pad tables of big-endian bits to match
-local function padb(tab1, tab2)
+function padb(tab1, tab2)
     if (#tab1 < #tab2) then
         for i=1, #tab2, 1 do
             table.insert(tab1, 1, 0)

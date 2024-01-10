@@ -54,3 +54,62 @@ function bin2dec(tab)
 
     return tonumber(table.concat(tab), 2)
 end
+
+-- Outputs a hex number (string) given a binary big-endian bit table
+function bin2hex(tab)
+    if (not (type(tab) == "table")) then
+        error("Expected table.")
+    end
+
+    local digitLookup = {
+        ["0000"]="0",
+        ["0001"]="1",
+        ["0010"]="2",
+        ["0011"]="3",
+        ["0100"]="4",
+        ["0101"]="5",
+        ["0110"]="6",
+        ["0111"]="7",
+        ["1000"]="8",
+        ["1001"]="9",
+        ["1010"]="a",
+        ["1011"]="b",
+        ["1100"]="c",
+        ["1101"]="d",
+        ["1110"]="e",
+        ["1111"]="f"
+    }
+
+    local result = {}
+    local digit = {}
+    local bitCounter = 0
+    for i=#tab, 1, -1 do
+        bitCounter = bitCounter + 1
+        table.insert(digit, 1, tab[i])
+
+        if (bitCounter == 4) then
+            table.insert(result, 1, digitLookup[table.concat(digit)])
+            bitCounter = 0
+        end
+
+        if ((i == 1) and (bitCounter > 0)) then
+            _ = {0, 0, 0, 0}
+            digit, _ = bitops.padb(digit, _)
+            table.insert(result, 1, digitLookup[table.concat(digit)])
+        end
+    end
+
+    return table.concat(result)
+end
+
+-- Outputs a hex number given a number and number's bit length
+function dec2hex(num, numBits)
+    num = tonumber(num)
+    numBits = tonumber(numBits)
+
+    if ((not (type(num) == "number")) or (not (type(numBits) == "number"))) then
+        error("Expected two numbers.")
+    end
+
+    return bin2hex(dec2bin(num, numBits))
+end
