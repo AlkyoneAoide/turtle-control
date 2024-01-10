@@ -24,7 +24,10 @@ function dec2bin(num, bitNum)
     end
 
     if (#result > bitNum) then
-        error("Not enough bits to represent input.")
+        local newResult = {}
+        for i=#result, #result-bitNum, -1 do
+            newResult[#result - i] = result[i]
+        end
     end
 
     -- pad with zeros
