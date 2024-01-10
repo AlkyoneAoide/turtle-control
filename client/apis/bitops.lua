@@ -76,7 +76,12 @@ function xorb(tab1, tab2)
         local a = (not (tab1[i] and tab2[i]))
         local b = (tab1[i] and a)
         local c = (tab2[i] and a)
-        result[i] = (b or c)
+
+        if (b or c) then
+            result[i] = 1
+        else
+            result[i] = 0
+        end
     end
 
     return result
