@@ -164,11 +164,11 @@ local function compute(data, L)
             h = g
             g = f
             f = e
-            e = d + temp1
+            e = math.fmod(d + temp1, math.pow(2, 32))
             d = c
             c = b
             b = a
-            a = temp1 + temp2
+            a = math.fmod(temp1 + temp2, math.pow(2, 32))
         end
 
         h1 = h1 + a
