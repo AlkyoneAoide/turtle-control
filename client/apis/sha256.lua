@@ -23,7 +23,7 @@ end
 
 -- The wikipedia on SHA-2 is very helpful
 -- data should be an array of bits
-local function compute(data, L)
+local function compute(data, dataLen)
     -- Hash values
     local h1 = 0x6a09e667
     local h2 = 0xbb67ae85
@@ -35,7 +35,7 @@ local function compute(data, L)
     local h8 = 0x5be0cd19
 
     -- Round constants
-    local k = {
+    local constants = {
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
         0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
@@ -51,17 +51,17 @@ local function compute(data, L)
     data[#data+1] = 1
 
     -- Append 0s until L+1+K+64 is a multiple of 512
-    local K = 0
-    while (not (math.fmod((L + 1 + K + 64), 512) == 0)) do
-        K = K + 1
+    local paddedZeros = 0
+    while (not (math.fmod((dataLen + 1 + paddedZeros + 64), 512) == 0)) do
+        paddedZeros = paddedZeros + 1
     end
 
-    for i=1, K, 1 do
+    for i=1, paddedZeros, 1 do
         data[#data+1] = 0
     end
 
     -- Append L as a 64 bit big-endian integer
-    LBits = numops.dec2bin(L, 64)
+    LBits = numops.dec2bin(dataLen, 64)
     tabops.tableConcat(data, LBits)
 
     -- Processing
@@ -125,6 +125,7 @@ local function compute(data, L)
             local sigma1b = bitops.rotrb(numops.dec2bin(e, 32), 11)
             local sigma1c = bitops.rotrb(numops.dec2bin(e, 32), 25)
 
+            -- the xor
             for l=1, #sigma1a, 1 do
                 sigma1[l] = math.fmod((sigma1a[l]+sigma1b[l]+sigma1c[l]), 2)
             end
@@ -133,7 +134,7 @@ local function compute(data, L)
             local ch = bitops.xorb(bitops.andb(numops.dec2bin(e, 32), numops.dec2bin(f, 32)), bitops.andb(bitops.notb(numops.dec2bin(e, 32)), numops.dec2bin(g, 32)))
 
             -- Get temp1 (number)
-            local temp1 = tonumber(table.concat(numops.dec2bin((h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + k[j] + tonumber(table.concat(words[j]), 2)), 32)), 2)
+            local temp1 = (h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + constants[j] + tonumber(table.concat(words[j]), 2))
 
             -- Get sigma0 (bits)
             local sigma0 = {}
@@ -142,6 +143,7 @@ local function compute(data, L)
             local sigma0b = bitops.rotrb(numops.dec2bin(a, 32), 13)
             local sigma0c = bitops.rotrb(numops.dec2bin(a, 32), 22)
 
+            -- the xor
             for l=1, #sigma0a, 1 do
                 sigma0[l] = math.fmod((sigma0a[l]+sigma0b[l]+sigma0c[l]), 2)
             end
@@ -153,22 +155,22 @@ local function compute(data, L)
             local majb = bitops.andb(numops.dec2bin(a, 32), numops.dec2bin(c, 32))
             local majc = bitops.andb(numops.dec2bin(b, 32), numops.dec2bin(c, 32))
 
+            -- the xor
             for l=1, #maja, 1 do
                 maj[l] = math.fmod((maja[l]+majb[l]+majc[l]), 2)
             end
 
             -- Get temp2 (number)
-            local temp2 = tonumber(table.concat(numops.dec2bin(tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2), 32)), 2)
-
+            local temp2 = (tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2))
             -- Assign new values to a-h
             h = g
             g = f
             f = e
-            e = tonumber(table.concat(bitops.andb(numops.dec2bin(d, 32), numops.dec2bin(temp1, 32))), 2)
+            e = tonumber(table.concat(bitops.addb(numops.dec2bin(d, 32), numops.dec2bin(temp1, 32))), 2)
             d = c
             c = b
             b = a
-            a = tonumber(table.concat(bitops.andb(numops.dec2bin(temp1, 32), numops.dec2bin(temp2, 32))), 2)
+            a = tonumber(table.concat(bitops.addb(numops.dec2bin(temp1, 32), numops.dec2bin(temp2, 32))), 2)
         end
 
         h1 = tonumber(table.concat(numops.dec2bin(h1 + a, 32)), 2)

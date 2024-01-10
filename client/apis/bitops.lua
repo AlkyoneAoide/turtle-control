@@ -78,7 +78,6 @@ function addb(tab1, tab2)
 
         result[i] = math.fmod(temp, 2)
 
-        -- FIND WHEN TO SETR CARRY
         if (temp > 1) then
             carry = 1
         else
