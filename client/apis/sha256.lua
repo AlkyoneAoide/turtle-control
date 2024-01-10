@@ -52,7 +52,7 @@ local function compute(data, L)
 
     -- Append 0s until L+1+K+64 is a multiple of 512
     local K = 0
-    while not (math.fmod((L + 1 + K + 64), 512) == 0) do
+    while (not (math.fmod((L + 1 + K + 64), 512) == 0)) do
         K = K + 1
     end
 

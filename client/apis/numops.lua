@@ -9,7 +9,7 @@ function dec2bin(num, bitNum)
 
     local bits = {}
 
-    while num > 0 do
+    while (num > 0) do
         local scanned = math.fmod(num, 2)
         bits[#bits + 1] = scanned
         num = (num-scanned) / 2
