@@ -28,6 +28,8 @@ function dec2bin(num, bitNum)
         for i=#result, #result-bitNum, -1 do
             newResult[#result - i] = result[i]
         end
+
+        result = newResult
     end
 
     -- pad with zeros
