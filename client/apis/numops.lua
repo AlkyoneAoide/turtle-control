@@ -25,11 +25,11 @@ function dec2bin(num, bitNum)
 
     if (#result > bitNum) then
         local newResult = {}
-        for i=#result, #result-bitNum, -1 do
-            newResult[#result - i] = result[i]
+        for i=1, bitNum, 1 do
+            newResult[i] = result[i]
         end
 
-        print(result .. " truncated to " .. newResult)
+        print(table.concat(result) .. " truncated to " .. table.concat(newResult))
 
         result = newResult
     end
