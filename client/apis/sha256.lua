@@ -194,8 +194,17 @@ local function compute(data, dataLen)
         h8 = math.fmod(h8 + h, math.pow(2, 32))
     end
 
-    print(h1 .. " " .. numops.dec2hex(h1, 32))
-    return (h1 .. h2 .. h3 .. h4 .. h5 .. h6 .. h7 .. h8)
+    local hexh1 = numops.dec2hex(h1, 32)
+    local hexh2 = numops.dec2hex(h2, 32)
+    local hexh3 = numops.dec2hex(h3, 32)
+    local hexh4 = numops.dec2hex(h4, 32)
+    local hexh5 = numops.dec2hex(h5, 32)
+    local hexh6 = numops.dec2hex(h6, 32)
+    local hexh7 = numops.dec2hex(h7, 32)
+    local hexh8 = numops.dec2hex(h8, 32)
+
+    print(hexh1 .. " " .. hexh2 .. " " .. hexh3 .. " " .. hexh4 .. " " .. hexh5 .. " " .. hexh6 .. " " .. hexh7 .. " " .. hexh8)
+    return (hexh1 .. hexh2 .. hexh3 .. hexh4 .. hexh5 .. hexh6 .. hexh7 .. hexh8)
 end
 
 function sha256(input)
