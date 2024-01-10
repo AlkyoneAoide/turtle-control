@@ -38,16 +38,10 @@ end
 
 -- right rotate a table of big-endian bits
 function rotrb(tab, num)
-    write("rot " .. num .. " input: ")
-    printb(tab)
-
     for i=1, num, 1 do
         table.insert(tab, 1, tab[#tab])
         table.remove(tab, #tab)
     end
-
-    write("out: ")
-    printb(tab)
 
     return tab
 end
@@ -74,7 +68,7 @@ function andb(tab1, tab2)
     -- do the anding
     local result = {}
     for i=1, #tab1, 1 do
-        if ((tab1[i] == 1) or (tab2[i] == 1)) then
+        if ((tab1[i] == 1) and (tab2[i] == 1)) then
             result[i] = 1
         else
             result[i] = 0
