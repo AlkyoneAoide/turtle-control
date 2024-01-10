@@ -165,21 +165,21 @@ local function compute(data, L)
             h = g
             g = f
             f = e
-            e = tonumber(table.concat(numops.dec2bin(d + temp1, 32)))
+            e = tonumber(table.concat(numops.dec2bin(d + temp1, 32)), 2)
             d = c
             c = b
             b = a
-            a = tonumber(table.concat(numops.dec2bin(temp1 + temp2, 32)))
+            a = tonumber(table.concat(numops.dec2bin(temp1 + temp2, 32)), 2)
         end
 
-        h1 = tonumber(table.concat(numops.dec2bin(h1 + a, 32)))
-        h2 = tonumber(table.concat(numops.dec2bin(h2 + b, 32)))
-        h3 = tonumber(table.concat(numops.dec2bin(h3 + c, 32)))
-        h4 = tonumber(table.concat(numops.dec2bin(h4 + d, 32)))
-        h5 = tonumber(table.concat(numops.dec2bin(h5 + e, 32)))
-        h6 = tonumber(table.concat(numops.dec2bin(h6 + f, 32)))
-        h7 = tonumber(table.concat(numops.dec2bin(h7 + g, 32)))
-        h8 = tonumber(table.concat(numops.dec2bin(h8 + h, 32)))
+        h1 = tonumber(table.concat(numops.dec2bin(h1 + a, 32)), 2)
+        h2 = tonumber(table.concat(numops.dec2bin(h2 + b, 32)), 2)
+        h3 = tonumber(table.concat(numops.dec2bin(h3 + c, 32)), 2)
+        h4 = tonumber(table.concat(numops.dec2bin(h4 + d, 32)), 2)
+        h5 = tonumber(table.concat(numops.dec2bin(h5 + e, 32)), 2)
+        h6 = tonumber(table.concat(numops.dec2bin(h6 + f, 32)), 2)
+        h7 = tonumber(table.concat(numops.dec2bin(h7 + g, 32)), 2)
+        h8 = tonumber(table.concat(numops.dec2bin(h8 + h, 32)), 2)
     end
 
     return (h1 .. " " .. h2 .. " " .. h3 .. " " .. h4 .. " " .. h5 .. " " .. h6 .. " " .. h7 .. " " .. h8)
