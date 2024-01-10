@@ -161,14 +161,15 @@ local function compute(data, L)
             local temp2 = tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2)
 
             -- Assign new values to a-h
+            -- THIS CLAMPING IS SCREWING THINGS UP, TAKE A LOOK
             h = g
             g = f
             f = e
-            e = math.fmod(d + temp1, math.pow(2, 32))
+            e = tonumber(table.concat(bitops.addb(numops.dec2bin(d), numops.dec2bin(temp1))))
             d = c
             c = b
             b = a
-            a = math.fmod(temp1 + temp2, math.pow(2, 32))
+            a = tonumber(table.concat(bitops.addb(numops.dec2bin(temp1), numops.dec2bin(temp2))))
         end
 
         h1 = h1 + a

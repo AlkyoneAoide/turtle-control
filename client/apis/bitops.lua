@@ -65,6 +65,30 @@ function andb(tab1, tab2)
     return result
 end
 
+-- add two tables of big-endian bits
+function addb(tab1, tab2)
+    -- pad tables to the same length
+    tab1, tab2 = padb(tab1, tab2)
+
+    -- do the adding
+    local result = {}
+    local carry = 0
+    for i=#tab1, 1, -1 do
+        local temp = tab1[i] + tab2[i] + carry
+
+        result[i] = math.fmod(temp, 2)
+
+        -- FIND WHEN TO SETR CARRY
+        if (temp > 1) then
+            carry = 1
+        else
+            carry = 0
+        end
+    end
+
+    return result
+end
+
 -- xor two tables of big-endian bits
 function xorb(tab1, tab2)
     -- pad tables to the same length
