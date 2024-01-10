@@ -183,7 +183,14 @@ local function compute(data, dataLen)
         h8 = tonumber(table.concat(numops.dec2bin(h8 + h, 32)), 2)
     end
 
-    print(h1 .. " " .. h2 .. " " .. h3 .. " " .. h4 .. " " .. h5 .. " " .. h6 .. " " .. h7 .. " " .. h8)
+    for i=1, 32, 1 do
+        write(numops.dec2bin(h1, 32)[i])
+
+        if (math.fmod(i, 4) == 0) then
+            write(" ")
+        end
+    end
+    
     return (h1 .. h2 .. h3 .. h4 .. h5 .. h6 .. h7 .. h8)
 end
 
