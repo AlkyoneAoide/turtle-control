@@ -121,9 +121,9 @@ local function compute(data, L)
             -- Get sigma1 (bits)
             local sigma1 = {}
 
-            local sigma1a = bitops.rotrb(e, 6)
-            local sigma1b = bitops.rotrb(e, 11)
-            local sigma1c = bitops.rotrb(e, 25)
+            local sigma1a = bitops.rotrb(numops.dec2bin(e), 6)
+            local sigma1b = bitops.rotrb(numops.dec2bin(e), 11)
+            local sigma1c = bitops.rotrb(numops.dec2bin(e), 25)
 
             for l=1, #sigma1a, 1 do
                 sigma1[l] = math.fmod((sigma1a[l]+sigma1b[l]+sigma1c[l]), 2)
@@ -138,9 +138,9 @@ local function compute(data, L)
             -- Get sigma0 (bits)
             local sigma0 = {}
 
-            local sigma0a = bitops.rotrb(a, 2)
-            local sigma0b = bitops.rotrb(a, 13)
-            local sigma0c = bitops.rotrb(a, 22)
+            local sigma0a = bitops.rotrb(numops.dec2bin(a), 2)
+            local sigma0b = bitops.rotrb(numops.dec2bin(a), 13)
+            local sigma0c = bitops.rotrb(numops.dec2bin(a), 22)
 
             for l=1, #sigma0a, 1 do
                 sigma0[l] = math.fmod((sigma0a[l]+sigma0b[l]+sigma0c[l]), 2)
