@@ -166,21 +166,21 @@ local function compute(data, dataLen)
             h = g
             g = f
             f = e
-            e = tonumber(table.concat(bitops.addb(numops.dec2bin(d, 32), numops.dec2bin(temp1, 32))), 2)
+            e = math.fmod(d + temp1, math.pow(2, 32))
             d = c
             c = b
             b = a
-            a = tonumber(table.concat(bitops.addb(numops.dec2bin(temp1, 32), numops.dec2bin(temp2, 32))), 2)
+            a = math.fmod(temp1 + temp2, math.pow(2, 32))
         end
 
-        h1 = h1 + a
-        h2 = h2 + b
-        h3 = h3 + c
-        h4 = h4 + d
-        h5 = h5 + e
-        h6 = h6 + f
-        h7 = h7 + g
-        h8 = h8 + h
+        h1 = math.fmod(h1 + a, math.pow(2, 32))
+        h2 = math.fmod(h2 + b, math.pow(2, 32))
+        h3 = math.fmod(h3 + c, math.pow(2, 32))
+        h4 = math.fmod(h4 + d, math.pow(2, 32))
+        h5 = math.fmod(h5 + e, math.pow(2, 32))
+        h6 = math.fmod(h6 + f, math.pow(2, 32))
+        h7 = math.fmod(h7 + g, math.pow(2, 32))
+        h8 = math.fmod(h8 + h, math.pow(2, 32))
     end
 
     for i=1, 32, 1 do
