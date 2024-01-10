@@ -16,7 +16,7 @@ end
 -- print a table of bits
 function printb(tab)
     for i=#tab, 1, -1 do
-        write(tab[#tab - i])
+        write(tab[#tab - i + 1])
 
         if (math.fmod(i, 4) == 0) then
             write(" ")
