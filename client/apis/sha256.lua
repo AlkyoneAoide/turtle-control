@@ -98,10 +98,10 @@ local function compute(data, L)
             -- Add our terms then % 2^32 so we get a 32 bit result
             local tmpValue = 0
 
-            tmpValue = tmpValue + tonumber("0b" .. table.concat(sigma(words[pos - 2], 1)))
-            tmpValue = tmpValue + tonumber("0b" .. table.concat(words[pos - 7]))
-            tmpValue = tmpValue + tonumber("0b" .. table.concat(sigma(words[pos - 15], 0)))
-            tmpValue = tmpValue + tonumber("0b" .. table.concat(words[pos - 16]))
+            tmpValue = tmpValue + tonumber(table.concat(sigma(words[pos - 2], 1)), 2)
+            tmpValue = tmpValue + tonumber(table.concat(words[pos - 7]), 2)
+            tmpValue = tmpValue + tonumber(table.concat(sigma(words[pos - 15], 0)), 2)
+            tmpValue = tmpValue + tonumber(table.concat(words[pos - 16]), 2)
 
             words[pos] = numops.dec2bin(math.fmod(tmpValue, math.pow(2, 32)), 32)
         end
@@ -133,7 +133,7 @@ local function compute(data, L)
             local ch = bitops.xorb(bitops.andb(numops.dec2bin(e), numops.dec2bin(f)), bitops.andb(bitops.notb(numops.dec2bin(e)), numops.dec2bin(g)))
 
             -- Get temp1 (number)
-            local temp1 = h + tonumber("0b" .. table.concat(sigma1)) + tonumber("0b" .. table.concat(ch)) + k[j] + tonumber("0b" .. words[j])
+            local temp1 = h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + k[j] + tonumber(words[j], 2)
 
             -- Get sigma0 (bits)
             local sigma0 = {}
@@ -158,7 +158,7 @@ local function compute(data, L)
             end
 
             -- Get temp2 (number)
-            local temp2 = tonumber("0b" .. table.concat(sigma0)) + tonumber("0b" .. table.concat(maj))
+            local temp2 = tonumber(table.concat(sigma0), 2) + tonumber(table.concat(maj), 2)
 
             -- Assign new values to a-h
             h = g
@@ -204,7 +204,7 @@ function sha256(input)
         L = string.len(stringInput)
 
         for i=1, L, 1 do
-            bits = tabops.tableConcat(bits, numops.dec2bin(stringInput[i], 8))
+            bits = tabops.tableConcat(bits, numops.dec2bin(string.byte(stringInput, i), 8))
         end
     end
 
