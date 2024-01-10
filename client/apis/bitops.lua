@@ -28,25 +28,26 @@ end
 
 -- right shift a table of big-endian bits
 function shiftrb(tab, num)
-    write("shift input: ")
-    printb(tab)
     for i=1, num, 1 do
         table.remove(tab, #tab)
         table.insert(tab, 1, 0)
     end
-
-    write("shift output: ")
-    printb(tab)
 
     return tab
 end
 
 -- right rotate a table of big-endian bits
 function rotrb(tab, num)
+    write("rot " .. num .. " input: ")
+    printb(tab)
+
     for i=1, num, 1 do
         table.insert(tab, 1, tab[#tab])
         table.remove(tab, #tab)
     end
+
+    write("out: ")
+    printb(tab)
 
     return tab
 end
