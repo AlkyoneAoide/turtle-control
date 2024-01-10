@@ -165,11 +165,11 @@ local function compute(data, L)
             h = g
             g = f
             f = e
-            e = tonumber(table.concat(bitops.addb(numops.dec2bin(d), numops.dec2bin(temp1))))
+            e = tonumber(table.concat(bitops.addb(numops.dec2bin(d, 32), numops.dec2bin(temp1, 32))))
             d = c
             c = b
             b = a
-            a = tonumber(table.concat(bitops.addb(numops.dec2bin(temp1), numops.dec2bin(temp2))))
+            a = tonumber(table.concat(bitops.addb(numops.dec2bin(temp1, 32), numops.dec2bin(temp2, 32))))
         end
 
         h1 = h1 + a
