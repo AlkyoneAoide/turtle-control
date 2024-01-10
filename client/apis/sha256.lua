@@ -133,7 +133,7 @@ local function compute(data, L)
             local ch = bitops.xorb(bitops.andb(numops.dec2bin(e, 32), numops.dec2bin(f, 32)), bitops.andb(bitops.notb(numops.dec2bin(e, 32)), numops.dec2bin(g, 32)))
 
             -- Get temp1 (number)
-            print("ch: " + tonumber(table.concat(ch), 2))
+            print("ch: " + table.concat(ch))
             local temp1 = h + tonumber(table.concat(sigma1), 2) + tonumber(table.concat(ch), 2) + k[j] + tonumber(words[j], 2)
 
             -- Get sigma0 (bits)
