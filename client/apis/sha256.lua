@@ -149,9 +149,9 @@ local function compute(data, L)
             -- Get maj (bits)
             local maj = {}
 
-            local maja = bitops.andb(a, b)
-            local majb = bitops.andb(a, c)
-            local majc = bitops.andb(b, c)
+            local maja = bitops.andb(numops.dec2bin(a, 32), numops.dec2bin(b, 32))
+            local majb = bitops.andb(numops.dec2bin(a, 32), numops.dec2bin(c, 32))
+            local majc = bitops.andb(numops.dec2bin(b, 32), numops.dec2bin(c, 32))
 
             for l=1, #maja, 1 do
                 maj[l] = math.fmod((maja[l]+majb[l]+majc[l]), 2)
